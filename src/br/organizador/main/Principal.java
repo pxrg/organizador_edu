@@ -4,6 +4,8 @@
  */
 package br.organizador.main;
 
+import br.organizador.modelo.Configuracao;
+import br.organizador.modelo.ConfiguracaoPasta;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -16,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class Principal extends javax.swing.JFrame {
     
     private boolean editando = false;
+    private Organizador organizador;
 
     /**
      * Creates new form Principal
@@ -23,6 +26,8 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         inicializarTable();
+        organizador = new Organizador();
+        organizador.getConfig().setPastaOrigem("C:\\tmp");
     }
 
     /**
@@ -47,6 +52,7 @@ public class Principal extends javax.swing.JFrame {
         tabConfiguracoes = new javax.swing.JTable();
         btnEditarTabela = new javax.swing.JButton();
         btnExcluirTabela = new javax.swing.JButton();
+        btnExecutar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -154,6 +160,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnExecutar.setText("Executar");
+        btnExecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExecutarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -161,9 +174,10 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 436, Short.MAX_VALUE)
+                        .addComponent(btnExecutar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditarTabela)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluirTabela)))
@@ -177,7 +191,8 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarTabela)
-                    .addComponent(btnExcluirTabela))
+                    .addComponent(btnExcluirTabela)
+                    .addComponent(btnExecutar))
                 .addGap(19, 19, 19))
         );
 
@@ -206,6 +221,7 @@ public class Principal extends javax.swing.JFrame {
         String cnpj = txtCNPJ.getText();
         String pasta = txtDestino.getText();
         ((DefaultTableModel) tabConfiguracoes.getModel()).addRow(new String[]{cnpj, pasta});
+        organizador.getConfig().adicionarConfig(new ConfiguracaoPasta(null, cnpj, pasta));
         preencherTexto("", "");
         editar(false);
     }//GEN-LAST:event_btnAdicionarActionPerformed
@@ -227,6 +243,10 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnExcluirTabelaActionPerformed
+
+    private void btnExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExecutarActionPerformed
+        organizador.executar();
+    }//GEN-LAST:event_btnExecutarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,6 +287,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarPasta;
     private javax.swing.JButton btnEditarTabela;
     private javax.swing.JButton btnExcluirTabela;
+    private javax.swing.JButton btnExecutar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
