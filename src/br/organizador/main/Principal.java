@@ -4,7 +4,6 @@
  */
 package br.organizador.main;
 
-import br.organizador.modelo.Configuracao;
 import br.organizador.modelo.ConfiguracaoPasta;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -53,6 +52,9 @@ public class Principal extends javax.swing.JFrame {
         btnEditarTabela = new javax.swing.JButton();
         btnExcluirTabela = new javax.swing.JButton();
         btnExecutar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mnuConfig = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -199,15 +201,34 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBounds(20, 200, 590, 280);
         jDesktopPane1.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        mnuConfig.setText("Configuração");
+        mnuConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuConfigActionPerformed(evt);
+            }
+        });
+
+        jMenuItem3.setText("Configurar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        mnuConfig.add(jMenuItem3);
+
+        jMenuBar1.add(mnuConfig);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
         );
 
         pack();
@@ -247,6 +268,15 @@ public class Principal extends javax.swing.JFrame {
     private void btnExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExecutarActionPerformed
         organizador.executar();
     }//GEN-LAST:event_btnExecutarActionPerformed
+
+    private void mnuConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConfigActionPerformed
+        
+    }//GEN-LAST:event_mnuConfigActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ConfiguracaoForm form = new ConfiguracaoForm(this.jDesktopPane1, organizador);
+        form.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,9 +321,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenu mnuConfig;
     private javax.swing.JTable tabConfiguracoes;
     private javax.swing.JTextField txtCNPJ;
     private javax.swing.JTextField txtDestino;

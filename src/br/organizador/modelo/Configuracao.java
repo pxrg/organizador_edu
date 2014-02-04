@@ -5,6 +5,7 @@
 package br.organizador.modelo;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -12,6 +13,7 @@ import java.util.HashMap;
  */
 public class Configuracao {
 
+    private int id;
     // Nome da pasta com os arquivos
     private String pastaOrigem;
     // Map com 'cnpj' e configuracoes
@@ -24,6 +26,14 @@ public class Configuracao {
     public Configuracao(String pastaOrigem) {
         this.pastaOrigem = pastaOrigem;
         configuracoes = new HashMap();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPastaOrigem() {
@@ -54,5 +64,14 @@ public class Configuracao {
             return;
         }
         configuracoes.put(configPasta.getCnpj(), configPasta);
+    }
+
+    public void adicionarConfig(List<ConfiguracaoPasta> configPasta) {
+        if (configuracoes == null || configPasta == null) {
+            return;
+        }
+        for (ConfiguracaoPasta configuracaoPasta : configPasta) {
+            configuracoes.put(configuracaoPasta.getCnpj(), configuracaoPasta);
+        }
     }
 }
