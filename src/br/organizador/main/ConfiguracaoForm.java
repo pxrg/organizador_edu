@@ -4,6 +4,10 @@
  */
 package br.organizador.main;
 
+import br.organizador.modelo.Configuracao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 
@@ -27,6 +31,9 @@ public class ConfiguracaoForm extends javax.swing.JInternalFrame {
         initComponents();
         desktop.add(this);
         this.organizador = organizador;
+        if (organizador.getConfig().getPastaOrigem() != null) {
+            txtPastaRaiz.setText(organizador.getConfig().getPastaOrigem());
+        }
     }
     
 
@@ -114,8 +121,19 @@ public class ConfiguracaoForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSelecionarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        organizador.getConfig().setPastaOrigem(txtPastaRaiz.getText());
-        this.dispose();
+        try {
+//            organizador.getConfig().setPastaOrigem(txtPastaRaiz.getText());
+            Configuracao config = organizador.getDb().selecionar();
+            if (config == null) {
+                config = new Configuracao();
+            }
+            config.setPastaOrigem(txtPastaRaiz.getText());
+            organizador.getDb().salvar(config);
+            organizador.setConfig(config);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConfiguracaoForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

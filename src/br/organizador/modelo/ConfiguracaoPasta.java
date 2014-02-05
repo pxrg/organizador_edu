@@ -19,6 +19,10 @@ public class ConfiguracaoPasta {
     public ConfiguracaoPasta() {
     }
 
+    public ConfiguracaoPasta(int id) {
+        this.id = id;
+    }
+
     public ConfiguracaoPasta(int id, String nomeEmpresa, String cnpj, String pasta, Configuracao config) {
         this.id = id;
         this.nomeEmpresa = nomeEmpresa;

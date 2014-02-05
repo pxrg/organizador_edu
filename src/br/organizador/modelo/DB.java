@@ -46,6 +46,14 @@ public class DB {
                     + "id_config INT NOT NULL,"
                     + "FOREIGN KEY(id_config) REFERENCES configuracoes(id)"
                     + ");");
+            this.stm.executeUpdate("DROP TABLE IF EXISTS logs");
+            this.stm.executeUpdate("CREATE TABLE logs( "
+                    + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,"
+                    + "descricao VARCHAR(255) NOT NULL,"
+                    + "id_config_pasta INT,"
+                    + "data DATE DEFAULT NOW,"
+                    + "FOREIGN KEY(id_config_pasta) REFERENCES configuracoes_pastas(id)"
+                    + ");");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,20 +79,20 @@ public class DB {
                     + "SET cnpj = '" + config.getCnpj() + "' ,"
                     + "nome_empresa = " + (config.getNomeEmpresa() != null ? "'" + config.getNomeEmpresa() + "'" : null) + " ,"
                     + "pasta = '" + config.getPasta() + "' ,"
-                    + "id_config = " + config.getConfig().getId() + " ,"
+                    + "id_config = " + config.getConfig().getId() + " "
                     + "WHERE id = " + config.getId() + ";");
         }
     }
     
     public void excluir(ConfiguracaoPasta config) throws SQLException {
         if (config.getId() > 0) {
-            this.stm.executeUpdate("DELETE FROM configuracoes_pasta WHERE id = " + config.getId() + ";");
+            this.stm.executeUpdate("DELETE FROM configuracoes_pastas WHERE id = " + config.getId() + ";");
         }
     }
     
     public void excluir(Configuracao config) throws SQLException {
         if (config.getId() > 0) {
-            this.stm.executeUpdate("DELETE FROM configuracoes_pasta WHERE id_config = " + config.getId() + ";");
+            this.stm.executeUpdate("DELETE FROM configuracoes_pastas WHERE id_config = " + config.getId() + ";");
             this.stm.executeUpdate("DELETE FROM configuracoes WHERE id = " + config.getId() + ";");
         }
     }

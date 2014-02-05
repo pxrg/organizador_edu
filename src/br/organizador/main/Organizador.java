@@ -33,8 +33,14 @@ public class Organizador {
         config = new Configuracao();
         this.arquivos = new ArrayList();
         manipularXml = new ManipularXml();
+        String arquivoDB = "organizador.db";
         try {
-            sqlite = new DB("organizador.db");
+            if (!new File(arquivoDB).exists()) {
+                sqlite = new DB(arquivoDB);
+                sqlite.initDB();
+            }else{
+                sqlite = new DB(arquivoDB);
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Organizador.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -78,7 +84,51 @@ public class Organizador {
         }
     }
 
+    public DB getSqlite() {
+        return sqlite;
+    }
+
+    public void setSqlite(DB sqlite) {
+        this.sqlite = sqlite;
+    }
+
+    public List<File> getArquivos() {
+        return arquivos;
+    }
+
+    public void setArquivos(List<File> arquivos) {
+        this.arquivos = arquivos;
+    }
+
+    public ManipularXml getManipularXml() {
+        return manipularXml;
+    }
+
+    public void setManipularXml(ManipularXml manipularXml) {
+        this.manipularXml = manipularXml;
+    }
+
     public Configuracao getConfig() {
         return config;
+    }
+
+    public void setConfig(Configuracao config) {
+        this.config = config;
+    }
+
+    public DB getDb() {
+        return sqlite;
+    }
+
+    public void adicionarConfig(ConfiguracaoPasta configuracaoPasta) throws SQLException {
+        this.sqlite.salvar(configuracaoPasta);
+        this.config.adicionarConfig(configuracaoPasta);
+    }
+    
+    public void carregarConfiguracoes() throws SQLException{
+        this.config = this.sqlite.carregarConfiguracoes();
+        if (config == null) {
+            this.config = new Configuracao();
+        }
     }
 }
