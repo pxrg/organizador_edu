@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.jdom2.JDOMException;
 
 /**
@@ -38,7 +39,7 @@ public class Organizador {
             if (!new File(arquivoDB).exists()) {
                 sqlite = new DB(arquivoDB);
                 sqlite.initDB();
-            }else{
+            } else {
                 sqlite = new DB(arquivoDB);
             }
         } catch (ClassNotFoundException ex) {
@@ -50,10 +51,11 @@ public class Organizador {
 
     protected void getFiles() {
         File origem = new File(config.getPastaOrigem());
+        this.arquivos = new ArrayList();
         arquivos.addAll(Arrays.asList(origem.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                return pathname.getAbsolutePath().endsWith(".xml");
+                return pathname.getAbsolutePath().endsWith(".xml") && !pathname.getName().startsWith(MoveArquivo.chave);
             }
         })));
     }
@@ -72,9 +74,11 @@ public class Organizador {
                 }
                 manipularXml.setArquivo(file);
                 cnpj = manipularXml.buscarCNPJDest();
-                configDest = config.getConfiguracao(cnpj);
-                if (configDest != null) {
-                    MoveArquivo.copiar(file.getAbsolutePath(), configDest.getPasta());
+                if (cnpj != null) {
+                    configDest = config.getConfiguracao(cnpj);
+                    if (configDest != null) {
+                        MoveArquivo.copiarERenomearArquivo(file.getAbsolutePath(), configDest.getPasta());
+                    }
                 }
             } catch (JDOMException ex) {
                 Logger.getLogger(Organizador.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,8 +128,8 @@ public class Organizador {
         this.sqlite.salvar(configuracaoPasta);
         this.config.adicionarConfig(configuracaoPasta);
     }
-    
-    public void carregarConfiguracoes() throws SQLException{
+
+    public void carregarConfiguracoes() throws SQLException {
         this.config = this.sqlite.carregarConfiguracoes();
         if (config == null) {
             this.config = new Configuracao();

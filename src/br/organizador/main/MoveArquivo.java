@@ -16,17 +16,19 @@ import java.nio.channels.FileChannel;
  * @author prg
  */
 public class MoveArquivo {
-    
-    public static void copiar(String origem, String destino) throws FileNotFoundException, IOException{
+
+    public static String chave = "_";
+
+    public static void copiar(String origem, String destino) throws FileNotFoundException, IOException {
         String nomeArq = origem.substring(origem.lastIndexOf(File.separator), origem.length());
-        copiar(new File(origem), new File(destino.concat(File.separator+nomeArq)));
+        copiar(new File(origem), new File(destino.concat(File.separator + nomeArq.replace("\\", ""))));
     }
-    
-    public static void copiar(File origem, File destino) throws FileNotFoundException, IOException{
+
+    public static void copiar(File origem, File destino) throws FileNotFoundException, IOException {
         if (destino.exists()) {
             destino.delete();
         }
-        
+
         FileChannel arqOrig = null;
         FileChannel arqDest = null;
         try {
@@ -37,7 +39,7 @@ public class MoveArquivo {
             throw new FileNotFoundException();
         } catch (IOException ex) {
             throw new IOException();
-        }finally{
+        } finally {
             if (arqOrig != null && arqOrig.isOpen()) {
                 arqOrig.close();
             }
@@ -46,5 +48,14 @@ public class MoveArquivo {
             }
         }
     }
-    
+
+    public static void copiarERenomearArquivo(String origem, String destino) throws FileNotFoundException, IOException {
+        String nomeArq = origem.substring(origem.lastIndexOf(File.separator), origem.length());
+        copiarERenomearArquivo(new File(origem), new File(destino.concat(File.separator + nomeArq.replace("\\", ""))));
+    }
+
+    public static void copiarERenomearArquivo(File origem, File destino) throws FileNotFoundException, IOException {
+        copiar(origem, destino);
+        origem.renameTo(new File(origem.getAbsolutePath().replace(origem.getName(), chave + origem.getName())));
+    }
 }

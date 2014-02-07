@@ -29,6 +29,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        this.setLocationRelativeTo(null);
         inicializarTable();
         lblId.setVisible(false);
         lblId.setText("0");
@@ -55,6 +56,8 @@ public class Principal extends javax.swing.JFrame {
         txtDestino = new javax.swing.JTextField();
         btnBuscarPasta = new javax.swing.JButton();
         lblId = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNomeEmpresa = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabConfiguracoes = new javax.swing.JTable();
@@ -66,6 +69,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Organizador NFe - edu");
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nova Configuração"));
@@ -94,32 +98,38 @@ public class Principal extends javax.swing.JFrame {
 
         lblId.setEnabled(false);
 
+        jLabel3.setText("Nome da Empresa:");
+
+        txtNomeEmpresa.setToolTipText("");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lblId)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdicionar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addComponent(txtNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(60, 60, 60)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnBuscarPasta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCNPJ))))
-                .addContainerGap(44, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtDestino))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscarPasta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,21 +137,26 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBuscarPasta)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnBuscarPasta)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar)
                     .addComponent(lblId))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jPanel1.setBounds(20, 20, 590, 170);
+        jPanel1.setBounds(20, 20, 590, 200);
         jDesktopPane1.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Configurações"));
@@ -151,14 +166,14 @@ public class Principal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CNPJ", "Destino", "ID"
+                "ID", "Empresa", "CNPJ", "Destino"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -221,7 +236,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        jPanel2.setBounds(20, 200, 590, 280);
+        jPanel2.setBounds(20, 230, 590, 280);
         jDesktopPane1.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         mnuConfig.setText("Configuração");
@@ -247,11 +262,13 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -264,14 +281,20 @@ public class Principal extends javax.swing.JFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         try {
             int id = Integer.parseInt(lblId.getText());
+            String nomeEmpresa = txtNomeEmpresa.getText();
             String cnpj = txtCNPJ.getText();
             String pasta = txtDestino.getText();
             if (organizador.getConfig() == null || (organizador.getConfig().getPastaOrigem() == null || organizador.getConfig().getPastaOrigem().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "É necessário configurar a pasta de origem dos documentos!", "Alerta", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            this.adicionarNaTabela(cnpj, pasta, id + "");
-            organizador.adicionarConfig(new ConfiguracaoPasta(id, null, cnpj, pasta, organizador.getConfig()));
-            preencherTexto("0", "", "");
+            if (cnpj.isEmpty() || pasta.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Os campos cnpj e pasta são obrigatórios!", "Alerta", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            this.adicionarNaTabela(id + "", nomeEmpresa, cnpj, pasta);
+            organizador.adicionarConfig(new ConfiguracaoPasta(id, nomeEmpresa, cnpj, pasta, organizador.getConfig()));
+            preencherTexto("0", "", "", "");
             editar(false);
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -280,11 +303,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnEditarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarTabelaActionPerformed
         int linha = tabConfiguracoes.getSelectedRow();
-        String cnpj = tabConfiguracoes.getModel().getValueAt(linha, 0).toString();
-        String destino = tabConfiguracoes.getModel().getValueAt(linha, 1).toString();
-        String id = tabConfiguracoes.getModel().getValueAt(linha, 2).toString();
+        String id = tabConfiguracoes.getModel().getValueAt(linha, 0).toString();
+        String nomeEmpresa = (tabConfiguracoes.getModel().getValueAt(linha, 1) != null) ?tabConfiguracoes.getModel().getValueAt(linha, 1).toString(): "";
+        String cnpj = tabConfiguracoes.getModel().getValueAt(linha, 2).toString();
+        String destino = tabConfiguracoes.getModel().getValueAt(linha, 3).toString();
         removerLinha(linha);
-        preencherTexto(id, cnpj, destino);
+        preencherTexto(id, nomeEmpresa, cnpj, destino);
         editar(true);
     }//GEN-LAST:event_btnEditarTabelaActionPerformed
 
@@ -306,6 +330,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExecutarActionPerformed
         organizador.executar();
+        JOptionPane.showMessageDialog(this, "Processo Concluido!", "Concluido", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnExecutarActionPerformed
 
     private void mnuConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConfigActionPerformed
@@ -359,6 +384,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
@@ -369,10 +395,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTable tabConfiguracoes;
     private javax.swing.JTextField txtCNPJ;
     private javax.swing.JTextField txtDestino;
+    private javax.swing.JTextField txtNomeEmpresa;
     // End of variables declaration//GEN-END:variables
 
-    private void adicionarNaTabela(String cnpj, String pasta, String id) {
-        ((DefaultTableModel) tabConfiguracoes.getModel()).addRow(new String[]{cnpj, pasta, id});
+    private void adicionarNaTabela(String id, String nomeEmpresa, String cnpj, String pasta) {
+        ((DefaultTableModel) tabConfiguracoes.getModel()).addRow(new String[]{id, nomeEmpresa, cnpj, pasta});
     }
 
     private void editar(boolean editar) {
@@ -402,8 +429,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void inicializarTable() {
         DefaultTableModel tableModel = new DefaultTableModel(
-                new Object[][][]{},
-                new String[]{"CNPJ", "Pasta de Destino", ""}) {
+                new Object[][][][]{},
+                new String[]{"ID", "Nome Empresa", "CNPJ", "Pasta de Destino"}) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -412,14 +439,17 @@ public class Principal extends javax.swing.JFrame {
 
         tabConfiguracoes.setModel(tableModel);
 
-        tabConfiguracoes.getColumnModel().getColumn(1).setPreferredWidth(250);
-        tabConfiguracoes.getColumnModel().getColumn(2).setMinWidth(0);
-        tabConfiguracoes.getColumnModel().getColumn(2).setMaxWidth(0);
+        tabConfiguracoes.getColumnModel().getColumn(0).setMinWidth(0);
+        tabConfiguracoes.getColumnModel().getColumn(0).setMaxWidth(0);
+        tabConfiguracoes.getColumnModel().getColumn(2).setMinWidth(150);
+        tabConfiguracoes.getColumnModel().getColumn(2).setMaxWidth(150);
+
         tabConfiguracoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    private void preencherTexto(String id, String cnpj, String pasta) {
+    private void preencherTexto(String id, String nomeEmpresa, String cnpj, String pasta) {
         lblId.setText(id);
+        txtNomeEmpresa.setText(nomeEmpresa);
         txtCNPJ.setText(cnpj);
         txtDestino.setText(pasta);
     }
@@ -430,7 +460,7 @@ public class Principal extends javax.swing.JFrame {
             organizador.carregarConfiguracoes();
             HashMap<String, ConfiguracaoPasta> map = organizador.getConfig().getConfiguracoes();
             for (ConfiguracaoPasta conf : map.values()) {
-                this.adicionarNaTabela(conf.getCnpj(), conf.getPasta(), conf.getId() + "");
+                this.adicionarNaTabela(conf.getId() + "", conf.getNomeEmpresa(), conf.getCnpj(), conf.getPasta());
             }
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);

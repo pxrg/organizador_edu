@@ -81,6 +81,9 @@ public class ManipularXml {
         Element node = doc.getRootElement();
         Namespace ns = Namespace.getNamespace("http://www.portalfiscal.inf.br/nfe");
         for (String tag : caminhoTag) {
+            if (node == null) {
+                return null;
+            }
             node = node.getChild(tag, ns);
         }
         return (node != null) ? node.getText() : null;
