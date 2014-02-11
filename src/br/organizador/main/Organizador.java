@@ -7,6 +7,7 @@ package br.organizador.main;
 import br.organizador.modelo.Configuracao;
 import br.organizador.modelo.ConfiguracaoPasta;
 import br.organizador.modelo.DB;
+import br.organizador.modelo.Log;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -16,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.jdom2.JDOMException;
 
 /**
@@ -24,12 +24,12 @@ import org.jdom2.JDOMException;
  * @author paulo.gomes
  */
 public class Organizador {
-
+    
     private Configuracao config;
     private DB sqlite;
     List<File> arquivos;
     ManipularXml manipularXml;
-
+    
     public Organizador() {
         config = new Configuracao();
         this.arquivos = new ArrayList();
@@ -48,7 +48,7 @@ public class Organizador {
             Logger.getLogger(Organizador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     protected void getFiles() {
         File origem = new File(config.getPastaOrigem());
         this.arquivos = new ArrayList();
@@ -59,7 +59,7 @@ public class Organizador {
             }
         })));
     }
-
+    
     public void executar() {
         if (config == null) {
             return;
@@ -78,61 +78,68 @@ public class Organizador {
                     configDest = config.getConfiguracao(cnpj);
                     if (configDest != null) {
                         MoveArquivo.copiarERenomearArquivo(file.getAbsolutePath(), configDest.getPasta());
+                        this.salvarLog(new Log("Arquivo movido: " + file.getAbsolutePath(), configDest));
                     }
                 }
             } catch (JDOMException ex) {
                 Logger.getLogger(Organizador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(Organizador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Organizador.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-
+    
     public DB getSqlite() {
         return sqlite;
     }
-
+    
     public void setSqlite(DB sqlite) {
         this.sqlite = sqlite;
     }
-
+    
     public List<File> getArquivos() {
         return arquivos;
     }
-
+    
     public void setArquivos(List<File> arquivos) {
         this.arquivos = arquivos;
     }
-
+    
     public ManipularXml getManipularXml() {
         return manipularXml;
     }
-
+    
     public void setManipularXml(ManipularXml manipularXml) {
         this.manipularXml = manipularXml;
     }
-
+    
     public Configuracao getConfig() {
         return config;
     }
-
+    
     public void setConfig(Configuracao config) {
         this.config = config;
     }
-
+    
     public DB getDb() {
         return sqlite;
     }
-
+    
     public void adicionarConfig(ConfiguracaoPasta configuracaoPasta) throws SQLException {
         this.sqlite.salvar(configuracaoPasta);
         this.config.adicionarConfig(configuracaoPasta);
     }
-
+    
     public void carregarConfiguracoes() throws SQLException {
         this.config = this.sqlite.carregarConfiguracoes();
         if (config == null) {
             this.config = new Configuracao();
         }
+    }
+    
+    public void salvarLog(Log log) throws SQLException {
+        this.sqlite.salvarLog(log);
     }
 }

@@ -6,7 +6,6 @@ package br.organizador.modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,16 +19,16 @@ import java.util.logging.Logger;
  * @author prg
  */
 public class DB {
-    
+
     private Connection conn;
     private Statement stm;
-    
+
     public DB(String arquivo) throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         this.conn = DriverManager.getConnection("jdbc:sqlite:" + arquivo);
         this.stm = this.conn.createStatement();
     }
-    
+
     public void initDB() {
         try {
             this.stm.executeUpdate("DROP TABLE IF EXISTS configuracoes");
@@ -58,7 +57,7 @@ public class DB {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void salvar(Configuracao config) throws SQLException {
         if (config.getId() == 0) {
             this.stm.executeUpdate("INSERT INTO configuracoes(pasta_origem) VALUES('"
@@ -67,7 +66,7 @@ public class DB {
             this.stm.executeUpdate("UPDATE configuracoes SET pasta_origem = '" + config.getPastaOrigem() + "' WHERE id = " + config.getId() + ";");
         }
     }
-    
+
     public void salvar(ConfiguracaoPasta config) throws SQLException {
         if (config.getId() == 0) {
             this.stm.executeUpdate("INSERT INTO configuracoes_pastas(cnpj, nome_empresa, pasta, id_config) "
@@ -83,20 +82,20 @@ public class DB {
                     + "WHERE id = " + config.getId() + ";");
         }
     }
-    
+
     public void excluir(ConfiguracaoPasta config) throws SQLException {
         if (config.getId() > 0) {
             this.stm.executeUpdate("DELETE FROM configuracoes_pastas WHERE id = " + config.getId() + ";");
         }
     }
-    
+
     public void excluir(Configuracao config) throws SQLException {
         if (config.getId() > 0) {
             this.stm.executeUpdate("DELETE FROM configuracoes_pastas WHERE id_config = " + config.getId() + ";");
             this.stm.executeUpdate("DELETE FROM configuracoes WHERE id = " + config.getId() + ";");
         }
     }
-    
+
     public Configuracao selecionar() throws SQLException {
         ResultSet rs = this.stm.executeQuery("SELECT * FROM configuracoes LIMIT 1;");
         Configuracao config = null;
@@ -119,17 +118,28 @@ public class DB {
         }
         return configs;
     }
-    
-    public Configuracao carregarConfiguracoes() throws SQLException{
+
+    public Configuracao carregarConfiguracoes() throws SQLException {
         Configuracao config = this.selecionar();
         if (config != null) {
             config.adicionarConfig(this.selecionar(config));
         }
         return config;
     }
-    
-    public void close() throws SQLException{
+
+    public void close() throws SQLException {
         this.stm.close();
         this.conn.close();
+    }
+
+    public void salvarLog(Log log) throws SQLException {
+        if (log.getId() == 0) {
+            this.stm.executeUpdate("INSERT INTO logs(descricao, id_config_pasta) VALUES('"
+                    + log.getDescricao() + "'," + log.getPasta().getId() + ");");
+        } else {
+            this.stm.executeUpdate("UPDATE logs SET descricao = '"
+                    + log.getDescricao() + "' , id_config_pasta = " + log.getPasta().getId()
+                    + " WHERE id = " + log.getId() + ";");
+        }
     }
 }

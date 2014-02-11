@@ -58,21 +58,19 @@ public class Principal extends javax.swing.JFrame {
         lblId = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNomeEmpresa = new javax.swing.JTextField();
+        btnConfiguracao = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabConfiguracoes = new javax.swing.JTable();
         btnEditarTabela = new javax.swing.JButton();
         btnExcluirTabela = new javax.swing.JButton();
         btnExecutar = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        mnuConfig = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Organizador NFe - edu");
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Nova Configuração"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Configuração Pasta de Destino"));
 
         jLabel1.setText("CNPJ:");
 
@@ -80,7 +78,9 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setText("Pasta de Destino:");
 
+        btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/Ok-icon.png"))); // NOI18N
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.setToolTipText("Adicionar nova configução de pasta de destino");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarActionPerformed(evt);
@@ -89,7 +89,8 @@ public class Principal extends javax.swing.JFrame {
 
         txtDestino.setEnabled(false);
 
-        btnBuscarPasta.setText("...");
+        btnBuscarPasta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/folder-documents-icon.png"))); // NOI18N
+        btnBuscarPasta.setToolTipText("Clique para selecionar a pasta de destino");
         btnBuscarPasta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarPastaActionPerformed(evt);
@@ -102,6 +103,15 @@ public class Principal extends javax.swing.JFrame {
 
         txtNomeEmpresa.setToolTipText("");
 
+        btnConfiguracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/Settings-icon.png"))); // NOI18N
+        btnConfiguracao.setText("Configurar Pasta de Origem");
+        btnConfiguracao.setToolTipText("Abre uma nova janela para configuração da pasta de origem");
+        btnConfiguracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -111,13 +121,15 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lblId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnConfiguracao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAdicionar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(txtNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -127,8 +139,8 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtDestino))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBuscarPasta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarPasta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
@@ -152,11 +164,12 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar)
-                    .addComponent(lblId))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(lblId)
+                    .addComponent(btnConfiguracao))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        jPanel1.setBounds(20, 20, 590, 200);
+        jPanel1.setBounds(10, 10, 620, 200);
         jDesktopPane1.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Configurações"));
@@ -186,21 +199,27 @@ public class Principal extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabConfiguracoes);
 
+        btnEditarTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/edit-icon.png"))); // NOI18N
         btnEditarTabela.setText("Editar");
+        btnEditarTabela.setToolTipText("Edita o registro selecionado na tabela");
         btnEditarTabela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarTabelaActionPerformed(evt);
             }
         });
 
+        btnExcluirTabela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/Close-icon.png"))); // NOI18N
         btnExcluirTabela.setText("Excluir");
+        btnExcluirTabela.setToolTipText("Exclui o registro selecionado na tabela");
         btnExcluirTabela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirTabelaActionPerformed(evt);
             }
         });
 
+        btnExecutar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/Play-Normal-icon.png"))); // NOI18N
         btnExecutar.setText("Executar");
+        btnExecutar.setToolTipText("Inicia a execução da rotina.");
         btnExecutar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExecutarActionPerformed(evt);
@@ -214,7 +233,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnExecutar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -227,7 +246,7 @@ public class Principal extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarTabela)
@@ -236,39 +255,18 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        jPanel2.setBounds(20, 230, 590, 280);
+        jPanel2.setBounds(10, 230, 620, 310);
         jDesktopPane1.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        mnuConfig.setText("Configuração");
-        mnuConfig.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuConfigActionPerformed(evt);
-            }
-        });
-
-        jMenuItem3.setText("Configurar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        mnuConfig.add(jMenuItem3);
-
-        jMenuBar1.add(mnuConfig);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -333,13 +331,10 @@ public class Principal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Processo Concluido!", "Concluido", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnExecutarActionPerformed
 
-    private void mnuConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuConfigActionPerformed
-    }//GEN-LAST:event_mnuConfigActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void btnConfiguracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracaoActionPerformed
         ConfiguracaoForm form = new ConfiguracaoForm(this.jDesktopPane1, organizador);
         form.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_btnConfiguracaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,6 +373,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnBuscarPasta;
+    private javax.swing.JButton btnConfiguracao;
     private javax.swing.JButton btnEditarTabela;
     private javax.swing.JButton btnExcluirTabela;
     private javax.swing.JButton btnExecutar;
@@ -385,13 +381,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblId;
-    private javax.swing.JMenu mnuConfig;
     private javax.swing.JTable tabConfiguracoes;
     private javax.swing.JTextField txtCNPJ;
     private javax.swing.JTextField txtDestino;
