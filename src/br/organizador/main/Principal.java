@@ -4,14 +4,16 @@
  */
 package br.organizador.main;
 
+import br.organizador.modelo.Configuracao;
 import br.organizador.modelo.ConfiguracaoPasta;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -50,31 +52,32 @@ public class Principal extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtCNPJ = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btnAdicionar = new javax.swing.JButton();
         txtDestino = new javax.swing.JTextField();
-        btnBuscarPasta = new javax.swing.JButton();
+        btnBuscarPastaDestino = new javax.swing.JButton();
         lblId = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNomeEmpresa = new javax.swing.JTextField();
-        btnConfiguracao = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txtOrigem = new javax.swing.JTextField();
+        btnBuscarPastaOrigem = new javax.swing.JButton();
+        txtCNPJ = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabConfiguracoes = new javax.swing.JTable();
         btnEditarTabela = new javax.swing.JButton();
         btnExcluirTabela = new javax.swing.JButton();
         btnExecutar = new javax.swing.JButton();
+        btnFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Organizador NFe - edu");
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Configuração Pasta de Destino"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Configuração"));
 
         jLabel1.setText("CNPJ:");
-
-        txtCNPJ.setToolTipText("");
 
         jLabel2.setText("Pasta de Destino:");
 
@@ -89,11 +92,11 @@ public class Principal extends javax.swing.JFrame {
 
         txtDestino.setEnabled(false);
 
-        btnBuscarPasta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/folder-documents-icon.png"))); // NOI18N
-        btnBuscarPasta.setToolTipText("Clique para selecionar a pasta de destino");
-        btnBuscarPasta.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarPastaDestino.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/folder-documents-icon.png"))); // NOI18N
+        btnBuscarPastaDestino.setToolTipText("Clique para selecionar a pasta de destino");
+        btnBuscarPastaDestino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarPastaActionPerformed(evt);
+                btnBuscarPastaDestinoActionPerformed(evt);
             }
         });
 
@@ -103,14 +106,23 @@ public class Principal extends javax.swing.JFrame {
 
         txtNomeEmpresa.setToolTipText("");
 
-        btnConfiguracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/Settings-icon.png"))); // NOI18N
-        btnConfiguracao.setText("Configurar Pasta de Origem");
-        btnConfiguracao.setToolTipText("Abre uma nova janela para configuração da pasta de origem");
-        btnConfiguracao.addActionListener(new java.awt.event.ActionListener() {
+        jLabel4.setText("Pasta de Origem:");
+
+        txtOrigem.setEnabled(false);
+
+        btnBuscarPastaOrigem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/folder-documents-icon.png"))); // NOI18N
+        btnBuscarPastaOrigem.setToolTipText("Clique para selecionar a pasta de destino");
+        btnBuscarPastaOrigem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfiguracaoActionPerformed(evt);
+                btnBuscarPastaOrigemActionPerformed(evt);
             }
         });
+
+        try {
+            txtCNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,20 +131,26 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblId)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConfiguracao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdicionar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtOrigem)
+                                .addGap(10, 10, 10)))
+                        .addComponent(btnBuscarPastaOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(txtNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                            .addComponent(lblId)
+                            .addComponent(txtNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAdicionar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -140,36 +158,43 @@ public class Principal extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtDestino))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscarPasta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBuscarPastaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnBuscarPasta)
+                    .addComponent(btnBuscarPastaOrigem)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBuscarPastaDestino)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdicionar)
-                    .addComponent(lblId)
-                    .addComponent(btnConfiguracao))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdicionar)
+                        .addComponent(lblId))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        jPanel1.setBounds(10, 10, 620, 200);
+        jPanel1.setBounds(10, 10, 620, 210);
         jDesktopPane1.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Configurações"));
@@ -226,6 +251,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/organizador/img/Log-Out-icon.png"))); // NOI18N
+        btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -239,7 +272,10 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditarTabela)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExcluirTabela)))
+                        .addComponent(btnExcluirTabela)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFechar)
+                        .addGap(1, 1, 1)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -250,8 +286,9 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarTabela)
-                    .addComponent(btnExcluirTabela)
-                    .addComponent(btnExecutar))
+                    .addComponent(btnExecutar)
+                    .addComponent(btnFechar)
+                    .addComponent(btnExcluirTabela))
                 .addGap(19, 19, 19))
         );
 
@@ -272,58 +309,20 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarPastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPastaActionPerformed
-        selecionarPasta(txtDestino.getText());
-    }//GEN-LAST:event_btnBuscarPastaActionPerformed
+    private void btnBuscarPastaDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPastaDestinoActionPerformed
+        selecionarPasta(txtDestino, txtDestino.getText());
+    }//GEN-LAST:event_btnBuscarPastaDestinoActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        try {
-            int id = Integer.parseInt(lblId.getText());
-            String nomeEmpresa = txtNomeEmpresa.getText();
-            String cnpj = txtCNPJ.getText();
-            String pasta = txtDestino.getText();
-            if (organizador.getConfig() == null || (organizador.getConfig().getPastaOrigem() == null || organizador.getConfig().getPastaOrigem().isEmpty())) {
-                JOptionPane.showMessageDialog(this, "É necessário configurar a pasta de origem dos documentos!", "Alerta", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            if (cnpj.isEmpty() || pasta.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Os campos cnpj e pasta são obrigatórios!", "Alerta", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            this.adicionarNaTabela(id + "", nomeEmpresa, cnpj, pasta);
-            organizador.adicionarConfig(new ConfiguracaoPasta(id, nomeEmpresa, cnpj, pasta, organizador.getConfig()));
-            preencherTexto("0", "", "", "");
-            editar(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        adicionarConfiguracaoPasta();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnEditarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarTabelaActionPerformed
-        int linha = tabConfiguracoes.getSelectedRow();
-        String id = tabConfiguracoes.getModel().getValueAt(linha, 0).toString();
-        String nomeEmpresa = (tabConfiguracoes.getModel().getValueAt(linha, 1) != null) ?tabConfiguracoes.getModel().getValueAt(linha, 1).toString(): "";
-        String cnpj = tabConfiguracoes.getModel().getValueAt(linha, 2).toString();
-        String destino = tabConfiguracoes.getModel().getValueAt(linha, 3).toString();
-        removerLinha(linha);
-        preencherTexto(id, nomeEmpresa, cnpj, destino);
-        editar(true);
+        editarConfiguracaoPasta();
     }//GEN-LAST:event_btnEditarTabelaActionPerformed
 
     private void btnExcluirTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirTabelaActionPerformed
-        int linha = tabConfiguracoes.getSelectedRow();
-        if (linha != -1) {
-            int resposta = JOptionPane.showConfirmDialog(this, "Confima a exclusão do registro ?", "Confirmar Exclusão", JOptionPane.WARNING_MESSAGE);
-            if (resposta == JOptionPane.YES_OPTION) {
-                try {
-                    String id = tabConfiguracoes.getModel().getValueAt(linha, 2).toString();
-                    organizador.getDb().excluir(new ConfiguracaoPasta(Integer.parseInt(id)));
-                    removerLinha(linha);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        excluiConfiguracaoPasta();
     }//GEN-LAST:event_btnExcluirTabelaActionPerformed
 
     private void btnExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExecutarActionPerformed
@@ -331,10 +330,18 @@ public class Principal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Processo Concluido!", "Concluido", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnExecutarActionPerformed
 
-    private void btnConfiguracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracaoActionPerformed
-        ConfiguracaoForm form = new ConfiguracaoForm(this.jDesktopPane1, organizador);
-        form.setVisible(true);
-    }//GEN-LAST:event_btnConfiguracaoActionPerformed
+    private void btnBuscarPastaOrigemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPastaOrigemActionPerformed
+        selecionarPasta(txtOrigem, txtOrigem.getText());
+        salvarPastaOrigem();
+    }//GEN-LAST:event_btnBuscarPastaOrigemActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void mostrarErro(Exception ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro do sistema", JOptionPane.ERROR_MESSAGE);
+    }
 
     /**
      * @param args the command line arguments
@@ -372,23 +379,26 @@ public class Principal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnBuscarPasta;
-    private javax.swing.JButton btnConfiguracao;
+    private javax.swing.JButton btnBuscarPastaDestino;
+    private javax.swing.JButton btnBuscarPastaOrigem;
     private javax.swing.JButton btnEditarTabela;
     private javax.swing.JButton btnExcluirTabela;
     private javax.swing.JButton btnExecutar;
+    private javax.swing.JButton btnFechar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblId;
     private javax.swing.JTable tabConfiguracoes;
-    private javax.swing.JTextField txtCNPJ;
+    private javax.swing.JFormattedTextField txtCNPJ;
     private javax.swing.JTextField txtDestino;
     private javax.swing.JTextField txtNomeEmpresa;
+    private javax.swing.JTextField txtOrigem;
     // End of variables declaration//GEN-END:variables
 
     private void adicionarNaTabela(String id, String nomeEmpresa, String cnpj, String pasta) {
@@ -399,13 +409,18 @@ public class Principal extends javax.swing.JFrame {
         this.editando = editar;
         btnEditarTabela.setEnabled(!this.editando);
         btnExcluirTabela.setEnabled(!this.editando);
+        if (editar) {
+            btnAdicionar.setText("Salvar");
+        } else {
+            btnAdicionar.setText("Adicionar");
+        }
     }
 
     private void removerLinha(int linha) {
         ((DefaultTableModel) tabConfiguracoes.getModel()).removeRow(linha);
     }
 
-    private void selecionarPasta(String caminhoInicial) {
+    private void selecionarPasta(JTextField txt, String caminhoInicial) {
         JFileChooser chooser = null;
         if (caminhoInicial != null || caminhoInicial.isEmpty()) {
             chooser = new JFileChooser(caminhoInicial);
@@ -416,7 +431,7 @@ public class Principal extends javax.swing.JFrame {
         int res = chooser.showOpenDialog(null);
         if (res == JFileChooser.APPROVE_OPTION) {
             String pasta = chooser.getSelectedFile().getAbsolutePath();
-            txtDestino.setText(pasta);
+            txt.setText(pasta);
         }
     }
 
@@ -444,20 +459,122 @@ public class Principal extends javax.swing.JFrame {
         lblId.setText(id);
         txtNomeEmpresa.setText(nomeEmpresa);
         txtCNPJ.setText(cnpj);
-        txtDestino.setText(pasta);
+//        txtDestino.setText(pasta);
     }
 
     private void carregarConfiguracoes() {
         try {
             organizador = new Organizador();
             organizador.carregarConfiguracoes();
+            txtOrigem.setText(organizador.getConfig().getPastaOrigem() + "");
             HashMap<String, ConfiguracaoPasta> map = organizador.getConfig().getConfiguracoes();
+            String pasta = "";
             for (ConfiguracaoPasta conf : map.values()) {
-                this.adicionarNaTabela(conf.getId() + "", conf.getNomeEmpresa(), conf.getCnpj(), conf.getPasta());
+                this.adicionarNaTabela(conf.getId() + "", conf.getNomeEmpresa(), formatarCNPJ(conf.getCnpj()), conf.getPasta());
+                pasta = conf.getPasta();
+            }
+            if (pasta.contains(File.separator)) {
+                txtDestino.setText(pasta.substring(0, pasta.lastIndexOf(File.separator)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarErro(ex);
         }
 
+    }
+
+    private void salvarPastaOrigem() {
+        if (txtOrigem.getText().trim().isEmpty()) {
+            return;
+        }
+        try {
+//            organizador.getConfig().setPastaOrigem(txtPastaRaiz.getText());
+            Configuracao config = organizador.getDb().selecionar();
+            if (config == null) {
+                config = new Configuracao();
+            }
+            config.setPastaOrigem(txtOrigem.getText());
+            organizador.getDb().salvar(config);
+            organizador.setConfig(organizador.getDb().selecionar());
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarErro(ex);
+        }
+    }
+
+    private String formatarCNPJ(String cnpj) {
+        String retorno = cnpj;
+        if (cnpj.contains(".")) {
+            retorno = cnpj.replaceAll("[^\\d]", "");
+        } else {
+            retorno = cnpj.substring(0, 2)
+                    .concat(".")
+                    .concat(cnpj.substring(2, 5))
+                    .concat(".")
+                    .concat(cnpj.substring(5, 8)
+                    .concat("/"))
+                    .concat(cnpj.substring(8, 12))
+                    .concat("-")
+                    .concat(cnpj.substring(12, 14));
+        }
+        return retorno;
+    }
+
+    private void adicionarConfiguracaoPasta() {
+        try {
+            int id = Integer.parseInt(lblId.getText());
+            String nomeEmpresa = txtNomeEmpresa.getText().trim();
+            String cnpj = txtCNPJ.getText().trim();
+            String pasta = txtDestino.getText().trim();
+            if (organizador.getConfig() == null || (organizador.getConfig().getPastaOrigem() == null || organizador.getConfig().getPastaOrigem().isEmpty())) {
+                JOptionPane.showMessageDialog(this, "É necessário configurar a pasta de origem dos documentos!", "Alerta", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (pasta.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Selecione a pasta de destino!", "Alerta", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (cnpj.isEmpty() || nomeEmpresa.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Os campos cnpj e nome da empresa são obrigatórios!", "Alerta", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            pasta = pasta.concat(File.separator.concat(nomeEmpresa));
+            ConfiguracaoPasta configPasta = new ConfiguracaoPasta(id, nomeEmpresa, formatarCNPJ(cnpj), pasta, organizador.getConfig());
+            organizador.adicionarConfig(configPasta);
+            this.adicionarNaTabela(configPasta.getId() + "", nomeEmpresa, cnpj, pasta);
+            preencherTexto("0", "", "", "");
+            editar(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarErro(ex);
+        }
+    }
+
+    private void editarConfiguracaoPasta() {
+        int linha = tabConfiguracoes.getSelectedRow();
+        String id = tabConfiguracoes.getModel().getValueAt(linha, 0).toString();
+        String nomeEmpresa = (tabConfiguracoes.getModel().getValueAt(linha, 1) != null) ? tabConfiguracoes.getModel().getValueAt(linha, 1).toString() : "";
+        String cnpj = tabConfiguracoes.getModel().getValueAt(linha, 2).toString();
+        String destino = tabConfiguracoes.getModel().getValueAt(linha, 3).toString();
+        removerLinha(linha);
+        preencherTexto(id, nomeEmpresa, cnpj, destino);
+        editar(true);
+    }
+
+    private void excluiConfiguracaoPasta() {
+        int linha = tabConfiguracoes.getSelectedRow();
+        if (linha != -1) {
+            int resposta = JOptionPane.showConfirmDialog(this, "Confima a exclusão do registro ?", "Confirmar Exclusão", JOptionPane.WARNING_MESSAGE);
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    String id = tabConfiguracoes.getModel().getValueAt(linha, 2).toString();
+                    organizador.getDb().excluir(new ConfiguracaoPasta(Integer.parseInt(id)));
+                    removerLinha(linha);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                    mostrarErro(ex);
+                }
+            }
+        }
     }
 }

@@ -73,6 +73,11 @@ public class DB {
                     + "VALUES('" + config.getCnpj() + "',"
                     + (config.getNomeEmpresa() != null ? "'" + config.getNomeEmpresa() + "'" : null)
                     + ",'" + config.getPasta() + "'," + config.getConfig().getId() + ");");
+            ResultSet rs = this.stm.executeQuery("SELECT id from configuracoes_pastas ORDER BY id DESC LIMIT 1");
+            if (rs.next()) {
+                config.setId(rs.getInt("id"));
+                rs.close();
+            }
         } else {
             this.stm.executeUpdate("UPDATE configuracoes_pastas "
                     + "SET cnpj = '" + config.getCnpj() + "' ,"
@@ -102,6 +107,7 @@ public class DB {
         if (rs.next()) {
             config = new Configuracao(rs.getString("pasta_origem"));
             config.setId(rs.getInt("id"));
+            rs.close();
         }
         return config;
     }
@@ -116,6 +122,7 @@ public class DB {
                     rs.getString("cnpj"),
                     rs.getString("pasta"), config));
         }
+        rs.close();
         return configs;
     }
 

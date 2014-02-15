@@ -34,7 +34,7 @@ public class MoveArquivoTest {
     public void testCopiar_String_String() throws Exception {
         System.out.println("testCopiar_String_String");
         String origem = "C:\\temp\\a.txt";
-        String destino = "C:\\temp\\dest";
+        String destino = "C:\\temp\\dest\\a";
         File test = new File(origem);
         if (!test.exists()) {
             test.createNewFile();
@@ -69,6 +69,6 @@ public class MoveArquivoTest {
         }
         MoveArquivo.copiarERenomearArquivo(origem, destino);
         // TODO review the generated test code and remove the default call to fail.
-        assertTrue(new File(MoveArquivo.chave + test.getName()).exists());
+        assertTrue(new File(test.getParent()+File.separator+MoveArquivo.chave + test.getName()).exists());
     }
 }

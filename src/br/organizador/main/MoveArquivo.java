@@ -16,19 +16,28 @@ import java.nio.channels.FileChannel;
  * @author prg
  */
 public class MoveArquivo {
-
+    
     public static String chave = "_";
-
-    public static void copiar(String origem, String destino) throws FileNotFoundException, IOException {
-        String nomeArq = origem.substring(origem.lastIndexOf(File.separator), origem.length());
-        copiar(new File(origem), new File(destino.concat(File.separator + nomeArq.replace("\\", ""))));
+    
+    public static String retornarNomeDoArquivo(String caminhoCompleto) {
+        return caminhoCompleto.substring(
+                caminhoCompleto.lastIndexOf(File.separator),
+                caminhoCompleto.length())
+                .replace(File.separator, "");
     }
-
+    
+    public static void copiar(String origem, String destino) throws FileNotFoundException, IOException {
+        copiar(new File(origem), new File(destino.concat(File.separator.concat(retornarNomeDoArquivo(origem)))));
+    }
+    
     public static void copiar(File origem, File destino) throws FileNotFoundException, IOException {
         if (destino.exists()) {
             destino.delete();
         }
-
+        if (!new File(destino.getParent()).exists()) {
+            new File(destino.getParent()).mkdirs();
+        }
+        
         FileChannel arqOrig = null;
         FileChannel arqDest = null;
         try {
@@ -48,12 +57,11 @@ public class MoveArquivo {
             }
         }
     }
-
+    
     public static void copiarERenomearArquivo(String origem, String destino) throws FileNotFoundException, IOException {
-        String nomeArq = origem.substring(origem.lastIndexOf(File.separator), origem.length());
-        copiarERenomearArquivo(new File(origem), new File(destino.concat(File.separator + nomeArq.replace("\\", ""))));
+        copiarERenomearArquivo(new File(origem), new File(destino.concat(File.separator.concat(retornarNomeDoArquivo(origem)))));
     }
-
+    
     public static void copiarERenomearArquivo(File origem, File destino) throws FileNotFoundException, IOException {
         copiar(origem, destino);
         origem.renameTo(new File(origem.getAbsolutePath().replace(origem.getName(), chave + origem.getName())));
